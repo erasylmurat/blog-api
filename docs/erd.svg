@@ -1,0 +1,75 @@
+<svg viewBox="0 0 850 580" width="100%" height="100%" style="background-color: #0d1117; font-family: -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, Roboto, Helvetica, Arial, sans-serif;">
+  
+
+  <text x="425" y="35" text-anchor="middle" class="title">Blog API — Entity Relationship Diagram (ERD)</text>
+
+  <g transform="translate(50, 80)">
+    <rect class="box" width="220" height="210" />
+    <rect x="0" y="0" width="220" height="35" fill="#1f6feb" rx="8" />
+    <rect x="0" y="25" width="220" height="10" fill="#1f6feb" />
+    <text x="110" y="23" text-anchor="middle" class="header">auths.User</text>
+
+    <text x="15" y="55" class="field"><tspan class="pk">PK</tspan> id</text><text x="205" y="55" text-anchor="end" class="type">BigAutoField</text>
+    <text x="15" y="80" class="field">email</text><text x="205" y="80" text-anchor="end" class="type">EmailField (UQ)</text>
+    <text x="15" y="105" class="field">first_name</text><text x="205" y="105" text-anchor="end" class="type">CharField(50)</text>
+    <text x="15" y="130" class="field">last_name</text><text x="205" y="130" text-anchor="end" class="type">CharField(50)</text>
+    <text x="15" y="155" class="field">is_active</text><text x="205" y="155" text-anchor="end" class="type">BooleanField</text>
+    <text x="15" y="180" class="field">is_staff</text><text x="205" y="180" text-anchor="end" class="type">BooleanField</text>
+  </g>
+
+  <g transform="translate(580, 80)">
+    <rect class="box" width="220" height="135" />
+    <rect x="0" y="0" width="220" height="35" fill="#238636" rx="8" />
+    <rect x="0" y="25" width="220" height="10" fill="#238636" />
+    <text x="110" y="23" text-anchor="middle" class="header">blog.Category</text>
+
+    <text x="15" y="55" class="field"><tspan class="pk">PK</tspan> id</text><text x="205" y="55" text-anchor="end" class="type">BigAutoField</text>
+    <text x="15" y="80" class="field">name</text><text x="205" y="80" text-anchor="end" class="type">CharField(100)</text>
+    <text x="15" y="105" class="field">slug</text><text x="205" y="105" text-anchor="end" class="type">SlugField (UQ)</text>
+  </g>
+
+  <g transform="translate(580, 260)">
+    <rect class="box" width="220" height="135" />
+    <rect x="0" y="0" width="220" height="35" fill="#238636" rx="8" />
+    <rect x="0" y="25" width="220" height="10" fill="#238636" />
+    <text x="110" y="23" text-anchor="middle" class="header">blog.Tag</text>
+
+    <text x="15" y="55" class="field"><tspan class="pk">PK</tspan> id</text><text x="205" y="55" text-anchor="end" class="type">BigAutoField</text>
+    <text x="15" y="80" class="field">name</text><text x="205" y="80" text-anchor="end" class="type">CharField(50)</text>
+    <text x="15" y="105" class="field">slug</text><text x="205" y="105" text-anchor="end" class="type">SlugField (UQ)</text>
+  </g>
+
+  <g transform="translate(310, 80)">
+    <rect class="box" width="230" height="285" />
+    <rect x="0" y="0" width="230" height="35" fill="#238636" rx="8" />
+    <rect x="0" y="25" width="230" height="10" fill="#238636" />
+    <text x="115" y="23" text-anchor="middle" class="header">blog.Post</text>
+
+    <text x="15" y="55" class="field"><tspan class="pk">PK</tspan> id</text><text x="215" y="55" text-anchor="end" class="type">BigAutoField</text>
+    <text x="15" y="80" class="field"><tspan class="fk">FK</tspan> author_id</text><text x="215" y="80" text-anchor="end" class="type">ForeignKey(User)</text>
+    <text x="15" y="105" class="field">title</text><text x="215" y="105" text-anchor="end" class="type">CharField(200)</text>
+    <text x="15" y="130" class="field">slug</text><text x="215" y="130" text-anchor="end" class="type">SlugField (UQ)</text>
+    <text x="15" y="155" class="field">body</text><text x="215" y="155" text-anchor="end" class="type">TextField</text>
+    <text x="15" y="180" class="field"><tspan class="fk">FK</tspan> category_id</text><text x="215" y="180" text-anchor="end" class="type">ForeignKey(Category)</text>
+    <text x="15" y="205" class="field">status</text><text x="215" y="205" text-anchor="end" class="type">CharField(choices)</text>
+    <text x="15" y="230" class="field">created_at</text><text x="215" y="230" text-anchor="end" class="type">DateTimeField</text>
+    <text x="15" y="255" class="field">updated_at</text><text x="215" y="255" text-anchor="end" class="type">DateTimeField</text>
+  </g>
+
+  <g transform="translate(180, 410)">
+    <rect class="box" width="230" height="150" />
+    <rect x="0" y="0" width="230" height="35" fill="#238636" rx="8" />
+    <rect x="0" y="25" width="230" height="10" fill="#238636" />
+    <text x="115" y="23" text-anchor="middle" class="header">blog.Comment</text>
+
+    <text x="15" y="55" class="field"><tspan class="pk">PK</tspan> id</text><text x="215" y="55" text-anchor="end" class="type">BigAutoField</text>
+    <text x="15" y="80" class="field"><tspan class="fk">FK</tspan> post_id</text><text x="215" y="80" text-anchor="end" class="type">ForeignKey(Post)</text>
+    <text x="15" y="105" class="field"><tspan class="fk">FK</tspan> author_id</text><text x="215" y="105" text-anchor="end" class="type">ForeignKey(User)</text>
+    <text x="15" y="130" class="field">body</text><text x="215" y="130" text-anchor="end" class="type">TextField</text>
+  </g>
+
+  <path d="M 270 160 L 310 160" class="line" />
+  <path d="M 540 160 L 580 160" class="line" />
+  <path d="M 425 365 L 425 485 L 410 485" class="line" />
+  <path d="M 160 290 L 160 510 L 180 510" class="line" />
+</svg>
