@@ -6,6 +6,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = conf.SECRET_KEY
 
+ALLOWED_HOSTS = conf.ALLOWED_HOSTS
+
 AUTH_USER_MODEL = 'auths.User'
 
 INSTALLED_APPS = [
