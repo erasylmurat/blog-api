@@ -1,7 +1,0 @@
-.venv/
-*.рус
-__pycache__/
-logs/
-settings/.env
-db.sqlite3
-.DS_Store
