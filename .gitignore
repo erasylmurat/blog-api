@@ -9,6 +9,7 @@ settings/.env
 # Local database
 db.sqlite3
 # Logs 
+logs/*
 !logs/.gitkeep
 # OS / IDE
 .DS_Store
