@@ -1,75 +1,125 @@
-<svg viewBox="0 0 850 580" width="100%" height="100%" style="background-color: #0d1117; font-family: -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, Roboto, Helvetica, Arial, sans-serif;">
-  
-
-  <text x="425" y="35" text-anchor="middle" class="title">Blog API — Entity Relationship Diagram (ERD)</text>
-
-  <g transform="translate(50, 80)">
-    <rect class="box" width="220" height="210" />
-    <rect x="0" y="0" width="220" height="35" fill="#1f6feb" rx="8" />
-    <rect x="0" y="25" width="220" height="10" fill="#1f6feb" />
-    <text x="110" y="23" text-anchor="middle" class="header">auths.User</text>
-
-    <text x="15" y="55" class="field"><tspan class="pk">PK</tspan> id</text><text x="205" y="55" text-anchor="end" class="type">BigAutoField</text>
-    <text x="15" y="80" class="field">email</text><text x="205" y="80" text-anchor="end" class="type">EmailField (UQ)</text>
-    <text x="15" y="105" class="field">first_name</text><text x="205" y="105" text-anchor="end" class="type">CharField(50)</text>
-    <text x="15" y="130" class="field">last_name</text><text x="205" y="130" text-anchor="end" class="type">CharField(50)</text>
-    <text x="15" y="155" class="field">is_active</text><text x="205" y="155" text-anchor="end" class="type">BooleanField</text>
-    <text x="15" y="180" class="field">is_staff</text><text x="205" y="180" text-anchor="end" class="type">BooleanField</text>
-  </g>
-
-  <g transform="translate(580, 80)">
-    <rect class="box" width="220" height="135" />
-    <rect x="0" y="0" width="220" height="35" fill="#238636" rx="8" />
-    <rect x="0" y="25" width="220" height="10" fill="#238636" />
-    <text x="110" y="23" text-anchor="middle" class="header">blog.Category</text>
-
-    <text x="15" y="55" class="field"><tspan class="pk">PK</tspan> id</text><text x="205" y="55" text-anchor="end" class="type">BigAutoField</text>
-    <text x="15" y="80" class="field">name</text><text x="205" y="80" text-anchor="end" class="type">CharField(100)</text>
-    <text x="15" y="105" class="field">slug</text><text x="205" y="105" text-anchor="end" class="type">SlugField (UQ)</text>
-  </g>
-
-  <g transform="translate(580, 260)">
-    <rect class="box" width="220" height="135" />
-    <rect x="0" y="0" width="220" height="35" fill="#238636" rx="8" />
-    <rect x="0" y="25" width="220" height="10" fill="#238636" />
-    <text x="110" y="23" text-anchor="middle" class="header">blog.Tag</text>
-
-    <text x="15" y="55" class="field"><tspan class="pk">PK</tspan> id</text><text x="205" y="55" text-anchor="end" class="type">BigAutoField</text>
-    <text x="15" y="80" class="field">name</text><text x="205" y="80" text-anchor="end" class="type">CharField(50)</text>
-    <text x="15" y="105" class="field">slug</text><text x="205" y="105" text-anchor="end" class="type">SlugField (UQ)</text>
-  </g>
-
-  <g transform="translate(310, 80)">
-    <rect class="box" width="230" height="285" />
-    <rect x="0" y="0" width="230" height="35" fill="#238636" rx="8" />
-    <rect x="0" y="25" width="230" height="10" fill="#238636" />
-    <text x="115" y="23" text-anchor="middle" class="header">blog.Post</text>
-
-    <text x="15" y="55" class="field"><tspan class="pk">PK</tspan> id</text><text x="215" y="55" text-anchor="end" class="type">BigAutoField</text>
-    <text x="15" y="80" class="field"><tspan class="fk">FK</tspan> author_id</text><text x="215" y="80" text-anchor="end" class="type">ForeignKey(User)</text>
-    <text x="15" y="105" class="field">title</text><text x="215" y="105" text-anchor="end" class="type">CharField(200)</text>
-    <text x="15" y="130" class="field">slug</text><text x="215" y="130" text-anchor="end" class="type">SlugField (UQ)</text>
-    <text x="15" y="155" class="field">body</text><text x="215" y="155" text-anchor="end" class="type">TextField</text>
-    <text x="15" y="180" class="field"><tspan class="fk">FK</tspan> category_id</text><text x="215" y="180" text-anchor="end" class="type">ForeignKey(Category)</text>
-    <text x="15" y="205" class="field">status</text><text x="215" y="205" text-anchor="end" class="type">CharField(choices)</text>
-    <text x="15" y="230" class="field">created_at</text><text x="215" y="230" text-anchor="end" class="type">DateTimeField</text>
-    <text x="15" y="255" class="field">updated_at</text><text x="215" y="255" text-anchor="end" class="type">DateTimeField</text>
-  </g>
-
-  <g transform="translate(180, 410)">
-    <rect class="box" width="230" height="150" />
-    <rect x="0" y="0" width="230" height="35" fill="#238636" rx="8" />
-    <rect x="0" y="25" width="230" height="10" fill="#238636" />
-    <text x="115" y="23" text-anchor="middle" class="header">blog.Comment</text>
-
-    <text x="15" y="55" class="field"><tspan class="pk">PK</tspan> id</text><text x="215" y="55" text-anchor="end" class="type">BigAutoField</text>
-    <text x="15" y="80" class="field"><tspan class="fk">FK</tspan> post_id</text><text x="215" y="80" text-anchor="end" class="type">ForeignKey(Post)</text>
-    <text x="15" y="105" class="field"><tspan class="fk">FK</tspan> author_id</text><text x="215" y="105" text-anchor="end" class="type">ForeignKey(User)</text>
-    <text x="15" y="130" class="field">body</text><text x="215" y="130" text-anchor="end" class="type">TextField</text>
-  </g>
-
-  <path d="M 270 160 L 310 160" class="line" />
-  <path d="M 540 160 L 580 160" class="line" />
-  <path d="M 425 365 L 425 485 L 410 485" class="line" />
-  <path d="M 160 290 L 160 510 L 180 510" class="line" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 760" width="1040" height="760" xmlns:c2pa="http://c2pa.org/manifest"><metadata><c2pa:manifest>AAAWgmp1bWIAAAAeanVtZGMycGEAEQAQgAAAqgA4m3EDYzJwYQAAABZcanVtYgAAAEdqdW1kYzJtYQARABCAAACqADibcQN1cm46YzJwYTo3ZWUwYjYzYS02ZDM3LTRlYjAtYjYyZC01NWM5NTRmMjA0MGQAAAADl2p1bWIAAAApanVtZGMyYXMAEQAQgAAAqgA4m3EDYzJwYS5hc3NlcnRpb25zAAAAALxqdW1iAAAARGp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuaW5ncmVkaWVudC52MwAAAAAYYzJzaIJzwLZBriSZyWB5l4wTIo0AAABwY2JvcqNpZGM6Zm9ybWF0bWltYWdlL3N2Zyt4bWxqaW5zdGFuY2VJRHgseG1wOmlpZDo2ZjUyMTYxMC0xNWExLTQ2MmUtODU2Ni01OTMyZWNhOTVkNDJscmVsYXRpb25zaGlwaHBhcmVudE9mAAAB4mp1bWIAAABBanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5hY3Rpb25zLnYyAAAAABhjMnNoU0OFeilcW4sC6yIV5GldCgAAAZljYm9yomdhY3Rpb25zgqJmYWN0aW9ua2MycGEub3BlbmVkanBhcmFtZXRlcnOha2luZ3JlZGllbnRzgaJjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFgg2AA8Ma2KF7BLA1XODOox1yNnaI1ym7ao2kMQEzZIdxCkZmFjdGlvbngdY29tLmFudGhyb3BpYy5jbGF1ZGUucHJvdmlkZWRqcGFyYW1ldGVyc6F4H2NvbS5hbnRocm9waWMub3JpZ2luLWNvbmZpZGVuY2VndW5rbm93bmtkZXNjcmlwdGlvbnhmQ2xhdWRlIHByb3ZpZGVkIHRoaXMgZmlsZSBhdCB0aGUgcmVxdWVzdCBvZiBhIHVzZXIgYW5kIG1heSBoYXZlIGNyZWF0ZWQgb3IgbW9kaWZpZWQgdGhlIGZpbGUgY29udGVudHMubXNvZnR3YXJlQWdlbnShZG5hbWVmQ2xhdWRlcmFsbEFjdGlvbnNJbmNsdWRlZPUAAADIanVtYgAAAEBqdW1kY2JvcgARABCAAACqADibcRNjMnBhLmhhc2guZGF0YQAAAAAYYzJzaC5ldL6VoyLPXt23uIhrA04AAACAY2JvcqVjYWxnZnNoYTI1NmNwYWRNAAAAAAAAAAAAAAAAAGRoYXNoWCDcDYU76n/GzCwerj0Xh36zHUdeLYoX0du/2tVhXsYL32RuYW1lbmp1bWJmIG1hbmlmZXN0amV4Y2x1c2lvbnOBomVzdGFydBiYZmxlbmd0aBkeBAAAAj5qdW1iAAAAJ2p1bWRjMmNsABEAEIAAAKoAOJtxA2MycGEuY2xhaW0udjIAAAACD2Nib3KlY2FsZ2ZzaGEyNTZpc2lnbmF0dXJleE1zZWxmI2p1bWJmPS9jMnBhL3VybjpjMnBhOjdlZTBiNjNhLTZkMzctNGViMC1iNjJkLTU1Yzk1NGYyMDQwZC9jMnBhLnNpZ25hdHVyZWppbnN0YW5jZUlEeCx4bXA6aWlkOjJkMDkzNTJhLWExOWUtNDc4NC04NDMwLTNkNDFjMTIyMWYwOXJjcmVhdGVkX2Fzc2VydGlvbnODomN1cmx4LXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaW5ncmVkaWVudC52M2RoYXNoWCDYADwxrYoXsEsDVc4M6jHXI2dojXKbtqjaQxATNkh3EKJjdXJseCpzZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmFjdGlvbnMudjJkaGFzaFggSB8hNcZjnKTZVE3y3ILmadkgb0dEsmCJnz/3+iQdLiyiY3VybHgpc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5oYXNoLmRhdGFkaGFzaFggpyNiSo+YIClum8eCo7D8AqpnSpYQePg+09zs7d/NOE90Y2xhaW1fZ2VuZXJhdG9yX2luZm+jZG5hbWVvQW50aHJvcGljIEZpbGVzZ3ZlcnNpb25lMS4wLjBrc3BlY1ZlcnNpb25lMi40LjAAABA4anVtYgAAAChqdW1kYzJjcwARABCAAACqADibcQNjMnBhLnNpZ25hdHVyZQAAABAIY2JvctKEWQISogEmGCFZAgowggIGMIIBjaADAgECAhRA5aAK7sI50L64g/oGQgU9Z1UTADAKBggqhkjOPQQDAzBJMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEuMCwGA1UEAxMlQW50aHJvcGljIENvbnRlbnQgQ3JlZGVudGlhbHMgUm9vdCBDQTAeFw0yNjA4MDcxODQzNTZaFw0yODA4MDYxOTQzNTZaMEQxFzAVBgNVBAoTDkFudGhyb3BpYywgUEJDMSkwJwYDVQQDEyBBbnRocm9waWMgQ2xhdWRlIENvbnRlbnQgU2lnbmluZzBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABJh6CmvLUBgFFNU0vUKlOVtE6djd17L5SuwX0LemFisBM3dkd/3cyjxFA3Qo5S46fX0/ihY0VZ7mfb9KF703t5OjWDBWMA4GA1UdDwEB/wQEAwIHgDAVBgNVHSUEDjAMBgorBgEEAYPoXgIBMAwGA1UdEwEB/wQCMAAwHwYDVR0jBBgwFoAUzlHiBIFOZFsj+OPEz5o+nMHXXMIwCgYIKoZIzj0EAwMDZwAwZAIwMXMdFJ4BetLLVY7ORuE9noqbbAZOZn/aArXyTwFAZfKrPzxF2vPoJNf1+UCdg1XGAjBwX1zd9WGqYkqmL5SFqw1QySjr1zJfpJM9+1rdDwSPLMOPOjKuiXjoU/pUUeG9RwmhY3BhZFkNngAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPZYQOX+zZaqx3xwTCDcwQm4MHiJ/5ekQn/xH+lTMW2tQkjer4yxKNc7x+P1/ll27v12XuEoflalQdzkxNICdRZLmM0=</c2pa:manifest></metadata>
+<rect width="1040" height="760" fill="#ffffff"/>
+<text x="520.0" y="36" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="20" font-weight="700" fill="#1f2328">Blog API — Entity Relationship Diagram (ERD)</text>
+<path d="M290 143.0 H380" fill="none" stroke="#57606a" stroke-width="1.8"/>
+<text x="302" y="137.0" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#1f2328">1</text>
+<text x="368" y="137.0" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#1f2328">N</text>
+<path d="M680 247.0 H735 V125.0 H800" fill="none" stroke="#57606a" stroke-width="1.8"/>
+<text x="692" y="241.0" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#1f2328">N</text>
+<text x="788" y="119.0" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#1f2328">1</text>
+<path d="M680 273.0 H710 V345.0 H800" fill="none" stroke="#57606a" stroke-width="1.8"/>
+<text x="692" y="289.0" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#1f2328">N</text>
+<text x="788" y="339.0" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#1f2328">M</text>
+<path d="M530.0 372 V450" fill="none" stroke="#57606a" stroke-width="1.8"/>
+<text x="542.0" y="390" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#1f2328">1</text>
+<text x="542.0" y="442" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#1f2328">N</text>
+<path d="M165.0 268 V549.0 H380" fill="none" stroke="#57606a" stroke-width="1.8"/>
+<text x="177.0" y="286" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#1f2328">1</text>
+<text x="368" y="543.0" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#1f2328">N</text>
+<rect x="40" y="70" width="250" height="198" rx="8" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1.5"/>
+<path d="M40 104 V78 a8 8 0 0 1 8 -8 H282 a8 8 0 0 1 8 8 V104 Z" fill="#0969da"/>
+<text x="165.0" y="92" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#ffffff">auths.User</text>
+<text x="50" y="122" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#9a6700">PK</text>
+<text x="78" y="122" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1f2328">id</text>
+<text x="280" y="122" text-anchor="end" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#656d76">BigAutoField</text>
+<line x1="40" y1="130" x2="290" y2="130" stroke="#e5e8eb"/>
+<text x="78" y="148" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1f2328">email</text>
+<text x="280" y="148" text-anchor="end" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#656d76">EmailField (UQ)</text>
+<line x1="40" y1="156" x2="290" y2="156" stroke="#e5e8eb"/>
+<text x="78" y="174" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1f2328">first_name</text>
+<text x="280" y="174" text-anchor="end" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#656d76">CharField(50)</text>
+<line x1="40" y1="182" x2="290" y2="182" stroke="#e5e8eb"/>
+<text x="78" y="200" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1f2328">last_name</text>
+<text x="280" y="200" text-anchor="end" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#656d76">CharField(50)</text>
+<line x1="40" y1="208" x2="290" y2="208" stroke="#e5e8eb"/>
+<text x="78" y="226" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1f2328">is_active</text>
+<text x="280" y="226" text-anchor="end" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#656d76">BooleanField</text>
+<line x1="40" y1="234" x2="290" y2="234" stroke="#e5e8eb"/>
+<text x="78" y="252" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1f2328">is_staff</text>
+<text x="280" y="252" text-anchor="end" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#656d76">BooleanField</text>
+<rect x="380" y="70" width="300" height="302" rx="8" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1.5"/>
+<path d="M380 104 V78 a8 8 0 0 1 8 -8 H672 a8 8 0 0 1 8 8 V104 Z" fill="#238636"/>
+<text x="530.0" y="92" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#ffffff">blog.Post</text>
+<text x="390" y="122" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#9a6700">PK</text>
+<text x="418" y="122" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1f2328">id</text>
+<text x="670" y="122" text-anchor="end" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#656d76">BigAutoField</text>
+<line x1="380" y1="130" x2="680" y2="130" stroke="#e5e8eb"/>
+<text x="390" y="148" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#0969da">FK</text>
+<text x="418" y="148" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1f2328">author_id</text>
+<text x="670" y="148" text-anchor="end" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#656d76">→ User (CASCADE)</text>
+<line x1="380" y1="156" x2="680" y2="156" stroke="#e5e8eb"/>
+<text x="418" y="174" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1f2328">title</text>
+<text x="670" y="174" text-anchor="end" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#656d76">CharField(200)</text>
+<line x1="380" y1="182" x2="680" y2="182" stroke="#e5e8eb"/>
+<text x="418" y="200" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1f2328">slug</text>
+<text x="670" y="200" text-anchor="end" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#656d76">SlugField (UQ)</text>
+<line x1="380" y1="208" x2="680" y2="208" stroke="#e5e8eb"/>
+<text x="418" y="226" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1f2328">body</text>
+<text x="670" y="226" text-anchor="end" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#656d76">TextField</text>
+<line x1="380" y1="234" x2="680" y2="234" stroke="#e5e8eb"/>
+<text x="390" y="252" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#0969da">FK</text>
+<text x="418" y="252" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1f2328">category_id</text>
+<text x="670" y="252" text-anchor="end" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#656d76">→ Category (SET_NULL)</text>
+<line x1="380" y1="260" x2="680" y2="260" stroke="#e5e8eb"/>
+<text x="418" y="278" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1f2328">tags</text>
+<text x="670" y="278" text-anchor="end" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#656d76">ManyToMany → Tag</text>
+<line x1="380" y1="286" x2="680" y2="286" stroke="#e5e8eb"/>
+<text x="418" y="304" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1f2328">status</text>
+<text x="670" y="304" text-anchor="end" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#656d76">draft | published</text>
+<line x1="380" y1="312" x2="680" y2="312" stroke="#e5e8eb"/>
+<text x="418" y="330" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1f2328">created_at</text>
+<text x="670" y="330" text-anchor="end" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#656d76">DateTimeField</text>
+<line x1="380" y1="338" x2="680" y2="338" stroke="#e5e8eb"/>
+<text x="418" y="356" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1f2328">updated_at</text>
+<text x="670" y="356" text-anchor="end" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#656d76">DateTimeField</text>
+<rect x="800" y="70" width="210" height="120" rx="8" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1.5"/>
+<path d="M800 104 V78 a8 8 0 0 1 8 -8 H1002 a8 8 0 0 1 8 8 V104 Z" fill="#238636"/>
+<text x="905.0" y="92" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#ffffff">blog.Category</text>
+<text x="810" y="122" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#9a6700">PK</text>
+<text x="838" y="122" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1f2328">id</text>
+<text x="1000" y="122" text-anchor="end" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#656d76">BigAutoField</text>
+<line x1="800" y1="130" x2="1010" y2="130" stroke="#e5e8eb"/>
+<text x="838" y="148" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1f2328">name</text>
+<text x="1000" y="148" text-anchor="end" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#656d76">CharField(100) UQ</text>
+<line x1="800" y1="156" x2="1010" y2="156" stroke="#e5e8eb"/>
+<text x="838" y="174" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1f2328">slug</text>
+<text x="1000" y="174" text-anchor="end" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#656d76">SlugField (UQ)</text>
+<rect x="800" y="290" width="210" height="120" rx="8" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1.5"/>
+<path d="M800 324 V298 a8 8 0 0 1 8 -8 H1002 a8 8 0 0 1 8 8 V324 Z" fill="#238636"/>
+<text x="905.0" y="312" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#ffffff">blog.Tag</text>
+<text x="810" y="342" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#9a6700">PK</text>
+<text x="838" y="342" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1f2328">id</text>
+<text x="1000" y="342" text-anchor="end" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#656d76">BigAutoField</text>
+<line x1="800" y1="350" x2="1010" y2="350" stroke="#e5e8eb"/>
+<text x="838" y="368" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1f2328">name</text>
+<text x="1000" y="368" text-anchor="end" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#656d76">CharField(50) UQ</text>
+<line x1="800" y1="376" x2="1010" y2="376" stroke="#e5e8eb"/>
+<text x="838" y="394" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1f2328">slug</text>
+<text x="1000" y="394" text-anchor="end" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#656d76">SlugField (UQ)</text>
+<rect x="380" y="450" width="300" height="172" rx="8" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1.5"/>
+<path d="M380 484 V458 a8 8 0 0 1 8 -8 H672 a8 8 0 0 1 8 8 V484 Z" fill="#238636"/>
+<text x="530.0" y="472" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#ffffff">blog.Comment</text>
+<text x="390" y="502" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#9a6700">PK</text>
+<text x="418" y="502" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1f2328">id</text>
+<text x="670" y="502" text-anchor="end" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#656d76">BigAutoField</text>
+<line x1="380" y1="510" x2="680" y2="510" stroke="#e5e8eb"/>
+<text x="390" y="528" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#0969da">FK</text>
+<text x="418" y="528" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1f2328">post_id</text>
+<text x="670" y="528" text-anchor="end" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#656d76">→ Post (CASCADE)</text>
+<line x1="380" y1="536" x2="680" y2="536" stroke="#e5e8eb"/>
+<text x="390" y="554" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#0969da">FK</text>
+<text x="418" y="554" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1f2328">author_id</text>
+<text x="670" y="554" text-anchor="end" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#656d76">→ User (CASCADE)</text>
+<line x1="380" y1="562" x2="680" y2="562" stroke="#e5e8eb"/>
+<text x="418" y="580" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1f2328">body</text>
+<text x="670" y="580" text-anchor="end" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#656d76">TextField</text>
+<line x1="380" y1="588" x2="680" y2="588" stroke="#e5e8eb"/>
+<text x="418" y="606" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1f2328">created_at</text>
+<text x="670" y="606" text-anchor="end" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#656d76">DateTimeField</text>
+<text x="40" y="672" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#9a6700">PK</text>
+<text x="62" y="672" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#656d76">primary key</text>
+<text x="150" y="672" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#0969da">FK</text>
+<text x="172" y="672" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#656d76">foreign key</text>
+<text x="270" y="672" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#656d76">UQ = unique   |   1 : N = one-to-many   |   N : M = many-to-many (junction table blog_post_tags)</text>
+<text x="40" y="694" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#656d76">auths.User also inherits password, last_login, is_superuser, groups and user_permissions from AbstractBaseUser / PermissionsMixin.</text>
 </svg>

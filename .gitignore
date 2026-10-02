@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+# Virtual environments
+.venv/
+venv/
+# Secrets 
+settings/.env
+# Local database
+db.sqlite3
+# Logs 
+logs/*
+!logs/.gitkeep
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/

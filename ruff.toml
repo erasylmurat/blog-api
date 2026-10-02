@@ -1,0 +1,26 @@
+line-length = 79
+target-version = "py312"
+extend-exclude = [".venv", "migrations"]
+
+[lint]
+select = ["E", "W", "F", "I", "N", "ANN"]
+ignore = ["ANN401"]  # Any is used for **extra_fields in the user manager
+
+[lint.isort]
+known-first-party = ["apps", "settings"]
+section-order = [
+    "future",
+    "standard-library",
+    "third-party",
+    "drf",
+    "django",
+    "first-party",
+    "local-folder",
+]
+
+[lint.isort.sections]
+drf = ["rest_framework"]
+django = ["django"]
+
+[format]
+quote-style = "single"
