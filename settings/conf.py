@@ -29,4 +29,6 @@ DB_PASSWORD: str = config('BLOG_DB_PASSWORD', default='')
 DB_HOST: str = config('BLOG_DB_HOST', default=DEFAULT_DB_HOST)
 DB_PORT: str = config('BLOG_DB_PORT', default=DEFAULT_DB_PORT)
 
+SQL_LOG: bool = config('BLOG_SQL_LOG', default=False, cast=bool)
+
 SETTINGS_MODULE: str = SETTINGS_MODULE_TEMPLATE.format(env_id=ENV_ID)
