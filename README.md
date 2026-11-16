@@ -3,6 +3,7 @@
 A blog REST API built with Django and Django REST Framework.
 Homework 1 covers the project structure, configuration, the data model and the ERD.
 Homework 2 adds a `seed` command with fake data and an admin panel built with Django Unfold.
+Homework 3 adds realistic seed dates and 50 Django ORM queries with a `queries` command.
 
 ## Tech stack
 
@@ -33,7 +34,10 @@ blog-api/
 │   └── blog/             # categories, tags, posts, comments
 │       ├── admin.py      # Unfold admin for blog models
 │       ├── callbacks.py  # Unfold callbacks (dashboard, badge, tabs, env)
-│       └── management/commands/seed.py
+│       ├── queries.py    # 50 ORM queries (Homework 3)
+│       └── management/commands/
+│           ├── seed.py
+│           └── queries.py
 ├── templates/
 │   └── admin/index.html  # admin dashboard
 └── settings/
@@ -71,6 +75,8 @@ python manage.py seed
 python manage.py createsuperuser
 python manage.py runserver
 ```
+
+To run the ORM queries: `python manage.py queries`.
 
 The admin site is available at http://127.0.0.1:8000/admin/.
 
@@ -144,8 +150,40 @@ Done in 0.71 seconds
 - 8 categories and 20 tags with real names; existing ones are skipped.
 - About 70% of posts are published, 30% are drafts, 10% have no category, each has 0–5 tags.
 - Comments are added only to published posts.
+- Dates are spread over the last 365 days: about 30% of posts have `updated_at` 1–30 days after `created_at` (never later than now), the rest have `updated_at == created_at`; every comment is created between its post's `created_at` and now.
 - Objects are created with `bulk_create`; running the command twice does not fail.
 - Other examples: `python manage.py seed --clear`, `python manage.py seed --users 0 --posts 50 --comments 0`, `python manage.py seed --help`.
+
+## Queries
+
+`apps/blog/queries.py` contains 50 ORM queries (one function each, mapped in the `QUERIES` dict).
+The `queries` command runs them and shows the result and the number of SQL queries.
+
+| Command | What it does |
+|---|---|
+| `python manage.py queries` | Runs all queries except 40–44 (they change the data) |
+| `python manage.py queries --number 31` | Runs only query 31 (works for 40–44 too) |
+| `python manage.py queries --number 6 --sql` | Also prints the SQL sent to the database |
+
+For lists and QuerySets the first 5 rows and the total are printed; values added with `annotate` are shown next to each object.
+Sample arguments (slugs, emails, days, …) are in `QUERY_ARGUMENTS` in the command.
+Queries 40–44 change the data — run `python manage.py seed --clear` to get fresh data.
+
+```
+$ python manage.py queries --number 31
+#31 categories_with_post_count — 1 SQL query
+  Python {'post_count': 17}
+  Django {'post_count': 14}
+  Databases {'post_count': 13}
+  Career {'post_count': 10}
+  Frontend {'post_count': 10}
+  (8 rows)
+
+$ python manage.py queries --number 6 --sql
+#6 has_drafts — 1 SQL query
+SELECT 1 AS "a" FROM "blog_post" WHERE "blog_post"."status" = 'draft' LIMIT 1
+  True
+```
 
 ## Admin
 
