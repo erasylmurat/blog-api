@@ -29,6 +29,7 @@ EMAIL_DOMAIN = 'example.com'
 
 INACTIVE_USERS_RATIO = 0.1
 STAFF_USERS_RATIO = 0.1
+MIN_USERS_PER_GROUP = 1
 PUBLISHED_POSTS_RATIO = 0.7
 POSTS_WITHOUT_CATEGORY_RATIO = 0.1
 
@@ -42,6 +43,9 @@ MIN_COMMENT_SENTENCES = 1
 MAX_COMMENT_SENTENCES = 3
 
 POSTS_MAX_AGE_DAYS = 365
+EDITED_POSTS_RATIO = 0.3
+MIN_EDIT_DELAY_DAYS = 1
+MAX_EDIT_DELAY_DAYS = 30
 FIRST_SLUG_SUFFIX = 2
 SLUG_SUFFIX_RESERVE = 6
 SUMMARY_WIDTH = 15
@@ -148,7 +152,7 @@ class Command(BaseCommand):
             categories = self._create_named(Category, CATEGORY_NAMES)
             tags = self._create_named(Tag, TAG_NAMES)
             posts = self._create_posts(posts_count)
-            comments = self._create_comments(comments_count)
+            comments = self._create_comments(comments_count, posts)
 
         elapsed = time.perf_counter() - started
 
@@ -157,7 +161,7 @@ class Command(BaseCommand):
         self._write_line('Users', users)
         self._write_line('Categories', categories)
         self._write_line('Tags', tags)
-        self._write_line('Posts', posts)
+        self._write_line('Posts', len(posts))
         self._write_line('Comments', comments)
         self.stdout.write(
             self.style.SUCCESS(f'Done in {elapsed:.2f} seconds'),
@@ -182,9 +186,11 @@ class Command(BaseCommand):
             User.objects.values_list('email', flat=True),
         )
         password = make_password(SEED_PASSWORD)
+        inactive = self._pick_indexes(count, INACTIVE_USERS_RATIO)
+        staff = self._pick_indexes(count, STAFF_USERS_RATIO)
         users = []
 
-        for _ in range(count):
+        for index in range(count):
             first_name = self.fake.first_name()
             last_name = self.fake.last_name()
             email = self._unique_email(first_name, last_name, used_emails)
@@ -194,13 +200,19 @@ class Command(BaseCommand):
                     first_name=first_name,
                     last_name=last_name,
                     password=password,
-                    is_active=random.random() >= INACTIVE_USERS_RATIO,
-                    is_staff=random.random() < STAFF_USERS_RATIO,
+                    is_active=index not in inactive,
+                    is_staff=index in staff,
                 ),
             )
 
         User.objects.bulk_create(users)
         return len(users)
+
+    @staticmethod
+    def _pick_indexes(count: int, ratio: float) -> set[int]:
+        """Random indexes for about `ratio` of the users, at least one."""
+        size = max(MIN_USERS_PER_GROUP, round(count * ratio))
+        return set(random.sample(range(count), min(size, count)))
 
     @staticmethod
     def _unique_email(
@@ -233,9 +245,9 @@ class Command(BaseCommand):
         model.objects.bulk_create(new_objects)
         return len(new_objects)
 
-    def _create_posts(self, count: int) -> int:
+    def _create_posts(self, count: int) -> list[Post]:
         if count == 0:
-            return 0
+            return []
 
         author_ids = list(User.objects.values_list('id', flat=True))
         if not author_ids:
@@ -271,11 +283,15 @@ class Command(BaseCommand):
 
         Post.objects.bulk_create(posts)
 
-        # created_at uses auto_now_add, so random dates are set afterwards
+        # auto_now_add / auto_now overwrite dates in bulk_create,
+        # so the dates are set afterwards with one bulk_update
         now = timezone.now()
         for post in posts:
-            post.created_at = self._random_date(now, POSTS_MAX_AGE_DAYS)
-            post.updated_at = post.created_at
+            post.created_at = self._random_date_between(
+                now - timedelta(days=POSTS_MAX_AGE_DAYS),
+                now,
+            )
+            post.updated_at = self._updated_at(post.created_at, now)
         Post.objects.bulk_update(posts, ['created_at', 'updated_at'])
 
         for post in posts:
@@ -285,7 +301,16 @@ class Command(BaseCommand):
             )
             post.tags.set(random.sample(tag_ids, tags_number))
 
-        return len(posts)
+        return posts
+
+    @staticmethod
+    def _updated_at(created_at: datetime, now: datetime) -> datetime:
+        if random.random() >= EDITED_POSTS_RATIO:
+            return created_at
+        edited_after = timedelta(
+            days=random.randint(MIN_EDIT_DELAY_DAYS, MAX_EDIT_DELAY_DAYS),
+        )
+        return min(created_at + edited_after, now)
 
     def _title(self) -> str:
         words = random.randint(MIN_TITLE_WORDS, MAX_TITLE_WORDS)
@@ -324,11 +349,11 @@ class Command(BaseCommand):
         return slug
 
     @staticmethod
-    def _random_date(end: datetime, max_age_days: int) -> datetime:
-        max_seconds = int(timedelta(days=max_age_days).total_seconds())
-        return end - timedelta(seconds=random.randint(0, max_seconds))
+    def _random_date_between(start: datetime, end: datetime) -> datetime:
+        max_seconds = max(int((end - start).total_seconds()), 0)
+        return start + timedelta(seconds=random.randint(0, max_seconds))
 
-    def _create_comments(self, count: int) -> int:
+    def _create_comments(self, count: int, new_posts: list[Post]) -> int:
         if count == 0:
             return 0
 
@@ -336,21 +361,23 @@ class Command(BaseCommand):
         if not author_ids:
             raise CommandError(ERROR_NO_USERS)
 
-        published_posts = list(
-            Post.objects.filter(status=Post.Status.PUBLISHED).values_list(
-                'id',
-                'created_at',
-            ),
-        )
+        # use the posts that are already in memory after bulk_create;
+        # load from the database only if no posts were created in this run
+        published_posts = [
+            post for post in new_posts if post.status == Post.Status.PUBLISHED
+        ]
+        if not new_posts:
+            published_posts = list(
+                Post.objects.filter(status=Post.Status.PUBLISHED).only(
+                    'id',
+                    'created_at',
+                ),
+            )
         if not published_posts:
             raise CommandError(ERROR_NO_PUBLISHED_POSTS)
 
         comments = []
-        dates = []
-        now = timezone.now()
-
         for _ in range(count):
-            post_id, post_created_at = random.choice(published_posts)
             sentences = self.fake.sentences(
                 nb=random.randint(
                     MIN_COMMENT_SENTENCES,
@@ -359,18 +386,20 @@ class Command(BaseCommand):
             )
             comments.append(
                 Comment(
-                    post_id=post_id,
+                    post=random.choice(published_posts),
                     author_id=random.choice(author_ids),
                     body=' '.join(sentences),
                 ),
             )
-            age_days = max((now - post_created_at).days, 0)
-            dates.append(self._random_date(now, age_days))
 
         Comment.objects.bulk_create(comments)
 
-        for comment, created_at in zip(comments, dates, strict=True):
-            comment.created_at = created_at
+        now = timezone.now()
+        for comment in comments:
+            comment.created_at = self._random_date_between(
+                comment.post.created_at,
+                now,
+            )
         Comment.objects.bulk_update(comments, ['created_at'])
 
         return len(comments)
